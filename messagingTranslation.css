@@ -1,0 +1,135 @@
+.custom-dropdown .slds-dropdown {
+    position: absolute;
+    top: calc(100% + 5px); 
+    left: 0;
+    z-index: 98 auto;
+    width: 200px; 
+    line-height: normal ;
+}
+.custom-dropdown {
+    position: absolute;
+    z-index: 70;
+    top: 18px;
+    left: 0.9em;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    word-wrap: break-word;
+}
+.slds-dropdown{
+    position: absolute;
+    top: 0px;
+    line-height: 10px;
+    left: 0px;
+    z-index: 98;
+}
+
+.Custom-input{
+    position: absolute;
+    top: calc(40vh + 141px);
+    left: 1.1em;
+    height: 2.25rem;
+    border-radius: 4px;
+    overflow: hidden;
+    text-align: start;
+    width: calc(100% - (5.1rem + -6px));  
+    border: 1px solid grey;
+    outline: auto;
+    outline-color: darkgray;
+    z-index: 3;
+}
+.Custom-input:focus{
+    border-color: #f2f2f2;
+    box-shadow: 0 0 2px 2px rgba(22, 22, 255, 0.5);
+    outline: none;
+}
+.custom-send-btn{
+    position: absolute;
+    top: calc(40vh + 141px);
+    right: calc(1.1em + 2px);
+    outline-style: solid;
+    outline: white;
+    z-index: 3;
+    --width-increase: 11px;
+    width: calc(1.9em + var(--width-increase));
+}
+.button-container{
+    flex-shrink: 0;
+}
+.chat-component{
+    position: absolute;
+    z-index: 10;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    height: 41vh;
+    border: thin solid #e2e2e2;
+    border-radius: 5px;
+    overflow-y: auto;
+    margin-top: 61px;
+}
+.label-combobox{
+    font-weight: 700;
+    size: 13px;
+    font-family: sans-serif;
+}
+.lightning-combobox{
+    line-height: 9px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.slds-chat-message__text_outbound{
+    background-color: #1689ee;
+}
+.translated-message {
+    font-family: unset;
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 9px;
+    font-size: 15px;
+    color: rgba(254, 254, 254, 0.6);
+}
+.slds_label {
+    margin-left: 5px; 
+    cursor: pointer; 
+    text-decoration: underline;
+}
+.button-icons{
+    position: absolute;
+    top: calc(40vh + 97px);
+    right: 63px;
+    z-index: 70;
+}
+.original-message{
+    padding-left: 5px;
+    margin-left: 0px;
+    border-left: 2px solid #0a0a0a;
+  
+}
+.slds-chat-message__meta{
+    color: #706E6B !important;
+}
+.customer-message{
+    padding-left: 5px;
+    margin-left: 0px;
+    border-left: 2px solid white;
+    color: #e5e5e5;
+}
+.btn-hide{
+    padding: 0 4px;
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn-hide:hover{
+    cursor: pointer;
+}
+.message-content{
+    font-size: 15px;
+    font-weight: 400;
+}

@@ -1,0 +1,172 @@
+<template>
+    <lightning-conversation-toolkit-api lwc:ref="lwcToolKitApi">
+    </lightning-conversation-toolkit-api>
+    <lightning-card  variant="base" >
+        <template if:true={chatwindow}>
+        <div class="custom-dropdown ">  
+            <label class="label-combobox slds-truncate " for="progress">Translate to: </label>
+            <lightning-combobox
+                name="progress"
+                class="lightning-combobox "
+                value={value}
+                placeholder="Select Language"
+                options={options}
+                style="top: -4px;"
+                onchange={handleChange} >
+            </lightning-combobox>
+          
+            <span class="label-combobox slds-truncate">via: </span>
+            <span class="slds-truncate slds-m-left_xx-small">Google Translate</span>
+        </div> 
+        
+        <div class="chat-component" id="chat-container">
+
+            <div class="slds-chat-bookend">
+                <!-- chat notification start -->
+                <span class="slds-icon_container slds-icon-utility-chat slds-chat-icon">
+                <svg class="slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chat"></use>
+                </svg>
+                </span>
+                <p>Chat started by
+                <b> Agent Name</b> • 4:59 PM</p>
+            </div>
+            <section role="log" class="slds-chat" >
+              <ul class="slds-chat-list">
+                  <!-- <template for:each={receivedMessages} for:item="item" for:index="index">
+    <div key={item.uniqueKey}>
+        <li key={item.uniqueKey}>{item.content}</li>
+    </div>
+</template> -->
+                    <template for:each={receivedMessages} for:item="message">
+                        <li key={message.uniqueKey} class="slds-chat-listitem slds-chat-listitem_outbound">
+                            <div class="slds-chat-message">
+                                <div class="slds-chat-message__body">
+                                    <template if:true={message.isAgent}>
+                                        <div class="slds-chat-message__text slds-chat-message__text_outbound">
+                                            <template if:true={message.isTranslated}>
+                                                <p class="translated-message slds-m_bottom_small" >
+                                                    {translatedOutboundMessage}
+                                                </p>
+                                            </template>
+                                            <template if:true={message.isTranslated}>
+                                                <div class="customer-message" >
+                                                    <span>{message.content}</span>
+                                                </div>
+                                            </template>
+                                            <template if:false={message.isTranslated}>  
+                                                <div class="message-content">
+                                                    <span>{message.content}</span>
+                                                </div>
+                                            </template>
+                                        </div>
+
+                                        <div class="slds-chat-message__meta" aria-label="Show-Translation"
+                                            style="display: flex; align-items: center;">
+                                            <!-- <lightning-icon icon-name='utility:chat' size='xx-small' title='chat'></lightning-icon> -->
+                                            <span class="btn-hide" onclick={toggleInboundMessage} data-key={message.uniqueKey}>
+											    <template if:true={message.isTranslated} >
+											        <!-- <span style="font-weight: bold; color: grey;">&#708;</span> -->
+                                                    <img  src={chevronUpIcon} alt="translationIcon Up" style="width: 10px"/>
+											    </template>
+											    <template if:false={message.isTranslated}>
+												    <!-- <span style="font-weight: bold; color: grey;">&#707;</span> -->
+                                                    <img  src={chevronRightIcon} alt="translationIcon Up" style="width: 6px"/>
+											    </template>
+                                                <span class="slds_label slds-m_right_small" style="margin-right: 2px; text-decoration: none;  background: #706E6B;">{message.inboundedLabel}</span>
+											    <span><img src={translationInactiveIcon} alt="Show Translation Icon" style="width: 12px"/></span>
+											</span>
+                                            <div style="flex: 1;"></div>
+                                            <span>{message.name} • {message.timestamp}</span>                                                                                          
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <li key={message.uniqueKey} class="slds-chat-listitem slds-chat-listitem_inbound">
+                            <div class="slds-chat-message">
+                                <div class="slds-chat-message__body">
+                                    <template if:true={message.isCustomer}>
+                                        <div class="slds-chat-message__text slds-chat-message__text_inbound">
+                                            <template if:true={message.isTranslated}>
+                                                <p class="translated-message slds-m_bottom_small" style="color: #878686;" >
+                                                    {translatedInboundMessage}
+                                                </p>
+                                            </template>
+                                            <template if:true={message.isTranslated}>
+                                                <div class="original-message" >
+                                                    <span>{message.content}</span>
+                                                </div>
+                                            </template>
+                                            <template if:false={message.isTranslated}>  
+                                                <div class="message-content">
+                                                    <span>{message.content}</span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                        <div class="slds-chat-message__meta" aria-label="Show-Original"
+                                            style="display: flex; align-items: center;">
+                                            <span>{message.name} • {message.timestamp}</span>
+                                            <div style="flex: 1;"></div>
+                                            <!-- <lightning-icon icon-name='utility:chat' size='xx-small' title='chat'></lightning-icon> -->
+                                            <span class="btn-hide" onclick={toggleInboundMessage} data-key={message.uniqueKey}>
+											    <template if:true={message.isTranslated} >
+											        <!-- <span style="font-weight: bold; color: grey;">&#708;</span> -->
+                                                    <img  src={chevronUpIcon} alt="translationIcon Up" style="width: 10px"/>
+											    </template>
+											    <template if:false={message.isTranslated}>
+												    <!-- <span style="font-weight: bold; color: grey;">&#707;</span> -->
+                                                    <img  src={chevronRightIcon} alt="translationIcon Up" style="width: 6px"/>
+											    </template>
+                                                <span class="slds_label slds-m_right_small" style="margin-right: 2px; text-decoration: none; background: #706E6B;">{message.inboundedLabel}</span>
+											    <span><img src={translationInactiveIcon} alt="Show Translation Icon" style="width: 12px"/></span>
+											</span>
+
+                                             <!-- <span> <lightning-button-icon icon-name="utility:chevronleft" varient="border-filled" size="large" class="slds-m-left_xx-small" alternative-text="chat" title="left" ></lightning-button-icon></span> -->
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </li>
+                    </template>
+              </ul>
+            </section>
+           
+        </div> 
+        </template>
+    </lightning-card>
+        <div class="button-icons ">
+            <lightning-button-icon icon-name="utility:quick_text" varient="border-filled" size="large" class="slds-m-left_xx-small" alternative-text="chat" title="Settings" onclick={handleChatButton}></lightning-button-icon>
+            <lightning-button-icon icon-name="utility:knowledge_base" size="large" varient="border-filled" class="slds-m-left_xx-small" alternative-text="knowledge" title="knowledge" onclick={handleChatButton}></lightning-button-icon>
+              <!-- <lightning-button-icon  icon-name={imageIcon} class="slds-m-left_xx-small" onclick={handleCollapseButtom}></lightning-button-icon> -->
+            <button class="slds-button slds-button slds-button_icon slds-button_icon-border slds-m-left_xx-small" onclick={handleCollapseButtom}>
+                <img src={translationIcon} width="17px" alt="Show Translation Icon" />
+            </button>  
+            <!-- <lightning-button label="getConversationLog" onclick={handleButtonClick} value="getConversationLog"></lightning-button> -->
+ 
+         </div>   
+    <div class="custom_div messaging-textarea conversation-log">
+            <!-- <p class="Custom-input">Test</p> -->
+            <template if:true={status}>
+                <input type="text" class="Custom-input" value={inputValue} placeholder=" Reply to message" oninput={handleInputChange}
+                    onfocus={handleInputFocus} onblur={handleInputBlur} disabled={isDisabled} />
+            </template>
+       
+            <div class={buttonContainerClass}>
+                <template  if:true={showSendButton}>
+                    <lightning-button-icon 
+                        icon-name="utility:send"   
+                        data-action="sendTextMessage" 
+                        variant="brand" 
+                        style="height:38px;"
+                        label='sendTextMessage' value="sendTextMessage"  alternative-text="Add user" class="slds-button slds-button_icon slds-button_icon-brand messaging-send-button slds-icon_flip custom-send-btn"  title="Add user"
+                        onclick={handleButtonClick} >  
+                    </lightning-button-icon>
+                </template>
+             </div>
+    </div>   
+
+
+</template>
