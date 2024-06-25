@@ -138,13 +138,6 @@ export default class MessagingTranslation extends  LightningElement {
         }
     }
 
-    // Function to Check its Agent Type or Customer Type 
-    // get processedMessages() {
-    //     return this.receivedMessages.map(message => ({
-    //         ...message,
-    //         }));
-    // }
-
     handleInputChange(event) {
         this.inputValue = event.target.value;
         this.showSendButton = this.inputValue.trim() !== ''; 
@@ -195,6 +188,7 @@ export default class MessagingTranslation extends  LightningElement {
     handleChatButton(){
         alert("Hey there !!! ")
     }
+
 
     handleCollapseButtom(e){
         this.chatwindow = !this.chatwindow; 
